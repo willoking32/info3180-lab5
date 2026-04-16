@@ -5,9 +5,35 @@ from werkzeug.security import generate_password_hash
 
 class lab5(db.Model):
 
-    __tablename__ = 'lab5'
+    __tablename__ = 'movies'
     id = db.Column(db.Integer, primary_key = True)
     title = db.Column(db.String(80))
     description = db.Column(db.String(255))
     poster = db.Column(db.String(100))
-    #created_at (date time)
+    created_at = db.Column(db.datetime())
+
+    def __init__(self, id, title, description, poster, created_at):
+        self.id = id
+        self.title = title
+        self.description = description
+        self.poster = poster
+        self.created_at = created_at
+        pass
+
+    def is_authenticated(self):
+        return True
+
+    def is_active(self):
+        return True
+
+    def is_anonymous(self):
+        return False
+    
+    def get_id(self):
+        try:
+            return unicode(self.id)  # python 2 support
+        except NameError:
+            return str(self.id)  # python 3 support
+
+    def __repr__(self):
+        return '<User %r>' % (self.title)
